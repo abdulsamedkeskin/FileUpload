@@ -7,7 +7,7 @@ import os
 import uuid
 from pathlib import Path
 
-UPLOAD_FOLDER = os.path.join("C:\\Users\\Gamze\\Desktop\\Python\\FileUpload\\backend\\uploads")
+UPLOAD_FOLDER = os.path.join("./uploads")
 app = Flask(__name__)
 cors = CORS(app)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -35,7 +35,7 @@ def upload_file():
 
 
 def find(name):
-  for root, dirs, files in os.walk('C:\\Users\\Gamze\\Desktop\\Python\\FileUpload\\backend\\uploads'):
+  for root, dirs, files in os.walk('./uploads'):
     if name in files:
       return True
     else:
@@ -55,7 +55,7 @@ def convert_size(size_bytes):
 def download(file_name):
   result = find(file_name)
   if result:  
-    file_size= Path(f'C:\\Users\\Gamze\\Desktop\\Python\\FileUpload\\backend\\uploads\\{file_name}').stat().st_size
+    file_size= Path(f'./uploads/{file_name}').stat().st_size
     response = {
       "name": file_name,
       "size": convert_size(file_size)
@@ -64,7 +64,5 @@ def download(file_name):
   else: 
     return {"Bad Request": "File Not Found"}, 500
   
-
-
 
 app.run(debug=True)
